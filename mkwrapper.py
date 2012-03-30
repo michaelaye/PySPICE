@@ -70,7 +70,7 @@ exclude_list = (
     
     'spkw18_c',
     
-    'dafgs_c', 'dafps_c', 'dafus_c', 'getfov_c',
+    'dafgs_c', 'dafps_c', 'dafus_c', #'getfov_c',
     'ckw01_c', 'ckw02_c', 'ckw03_c', 'spk14a_c', 'spkw02_c', 'spkw03_c',
     'spkw05_c', 'spkw08_c', 'spkw09_c', 'spkw10_c', 'spkw12_c', 'spkw13_c',
     
@@ -87,7 +87,7 @@ exclude_list = (
 module_defs = []
 cspice_src = None
 
-DEBUG = 0 # set it on when string is the right one
+DEBUG = True # set it on when string is the right one
 
 INPUT_TYPE = 0
 OUTPUT_TYPE = 1
@@ -725,7 +725,6 @@ def parse_param(param):
     Take the given parameter and break it up into the type of
     variable, the variable name and whether it's a pointer.
     """
-    
     param_obj = Container()
     
     param = remove_extra_spaces(param)
@@ -733,8 +732,8 @@ def parse_param(param):
     
     param_obj.original = param
     
-    #debug('param: %s' % param)
-    #debug('param_split: %s' % str(param_split))
+    debug('param: %s' % param)
+    debug('param_split: %s' % str(param_split))
     
     index = 0
     
@@ -784,21 +783,22 @@ def parse_param(param):
             open_bracket_pos = param.find('[', start_find)
             start_find = open_bracket_pos + 1
             
-            #debug('open_bracket_pos: %s' % open_bracket_pos)
+            debug('open_bracket_pos: %s' % open_bracket_pos)
             
             # if no open bracket was found, break out of the loop
             if open_bracket_pos == -1:
                 break
             close_bracket_pos = param.find(']', start_find)
             
-            #debug('close_bracket_pos: %s' % close_bracket_pos)
+            debug('close_bracket_pos: %s' % close_bracket_pos)
             
             # try to convert the number of the elements into an
             # integer.  this may fail if the brackets are empty.  If
             # they are empty, don't fail, or else raise the exception.
             t = param[open_bracket_pos+1:close_bracket_pos]
             
-            #debug('t: %s' % t)
+            debug('t: %s, len(t): %i' % (t,len(t)))
+            if len(t) == 0: t = 5
             
             try:
                 param_obj.num_elements.append(int(t))
@@ -807,9 +807,9 @@ def parse_param(param):
                     raise msg
                 param_obj.num_elements.append('')
             
-            #debug('num_elements: %s' % str(param_obj.num_elements))
+            debug('num_elements: %s' % str(param_obj.num_elements))
         
-        #debug('num_elements (out of loop): %s' % param_obj.num_elements)
+        debug('num_elements (out of loop): %s' % param_obj.num_elements)
         
         # check if the bracket was stuck on the variable and
         # remove it
@@ -821,12 +821,12 @@ def parse_param(param):
         param_obj.is_array = len(param_obj.num_elements)
         determine_py_type(param_obj)
         
-        #debug('type: %s' % param_obj.type)
-        #debug('is_const: %s' % param_obj.is_const)
-        #debug('name: %s' % param_obj.name)
-        #debug('is_pointer: %s' % param_obj.is_pointer)
-        #debug('is_array: %s' % str(param_obj.is_array))
-        #debug('py_string: %s' % param_obj.py_string)
+        # debug('type: %s' % param_obj.type)
+        # debug('is_const: %s' % param_obj.is_const)
+        # debug('name: %s' % param_obj.name)
+        # debug('is_pointer: %s' % param_obj.is_pointer)
+        # debug('is_array: %s' % str(param_obj.is_array))
+        # debug('py_string: %s' % param_obj.py_string)
         
         if param_obj.is_array:
             param_obj.py_string = get_tuple_py_string(param_obj)
@@ -844,7 +844,7 @@ def parse_prototype(prototype):
     function, the function name, whether it is a pointer and the
     parameters it takes.
     """
-    
+    print(prototype)
     prototype = prototype.strip()
     prototype_split = prototype.split(" ")
     type = prototype_split[0]
