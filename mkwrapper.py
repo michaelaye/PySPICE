@@ -87,7 +87,7 @@ exclude_list = (
 module_defs = []
 cspice_src = None
 
-DEBUG = True # set it on when string is the right one
+DEBUG = False # set it on when string is the right one
 
 INPUT_TYPE = 0
 OUTPUT_TYPE = 1
@@ -844,7 +844,6 @@ def parse_prototype(prototype):
     function, the function name, whether it is a pointer and the
     parameters it takes.
     """
-    print(prototype)
     prototype = prototype.strip()
     prototype_split = prototype.split(" ")
     type = prototype_split[0]
