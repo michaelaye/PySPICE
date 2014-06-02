@@ -715,38 +715,29 @@ def get_tuple_py_string(param_obj, curr_depth=0):
 
     return t
 
+
 def fixNameCollision(name):
     if name in RESERVED_NAMES:
         return name + '_'
     else:
         return name
 
+
 def parse_param(param):
     """
     Take the given parameter and break it up into the type of
     variable, the variable name and whether it's a pointer.
     """
-<<<<<<< HEAD
-=======
-
->>>>>>> master
     param_obj = Container()
 
     param = remove_extra_spaces(param)
     param_split = param.split(" ")
 
     param_obj.original = param
-<<<<<<< HEAD
-    
+
     debug('param: %s' % param)
     debug('param_split: %s' % str(param_split))
-    
-=======
 
-    #debug('param: %s' % param)
-    #debug('param_split: %s' % str(param_split))
-
->>>>>>> master
     index = 0
 
     type = param_split[index]
@@ -794,61 +785,34 @@ def parse_param(param):
         while 1:
             open_bracket_pos = param.find('[', start_find)
             start_find = open_bracket_pos + 1
-<<<<<<< HEAD
-            
             debug('open_bracket_pos: %s' % open_bracket_pos)
-            
-=======
 
-            #debug('open_bracket_pos: %s' % open_bracket_pos)
-
->>>>>>> master
             # if no open bracket was found, break out of the loop
             if open_bracket_pos == -1:
                 break
             close_bracket_pos = param.find(']', start_find)
-<<<<<<< HEAD
-            
+
             debug('close_bracket_pos: %s' % close_bracket_pos)
-            
-=======
 
-            #debug('close_bracket_pos: %s' % close_bracket_pos)
-
->>>>>>> master
             # try to convert the number of the elements into an
             # integer.  this may fail if the brackets are empty.  If
             # they are empty, don't fail, or else raise the exception.
             t = param[open_bracket_pos+1:close_bracket_pos]
-<<<<<<< HEAD
-            
+
             debug('t: %s, len(t): %i' % (t,len(t)))
             if len(t) == 0: t = 5
-            
-=======
 
-            #debug('t: %s' % t)
-
->>>>>>> master
             try:
                 param_obj.num_elements.append(int(t))
             except Exception, msg:
                 if t:
                     raise msg
                 param_obj.num_elements.append('')
-<<<<<<< HEAD
-            
+
             debug('num_elements: %s' % str(param_obj.num_elements))
-        
+
         debug('num_elements (out of loop): %s' % param_obj.num_elements)
-        
-=======
 
-            #debug('num_elements: %s' % str(param_obj.num_elements))
-
-        #debug('num_elements (out of loop): %s' % param_obj.num_elements)
-
->>>>>>> master
         # check if the bracket was stuck on the variable and
         # remove it
         name_bracket_pos = name.find('[')
@@ -858,25 +822,14 @@ def parse_param(param):
         param_obj.name = fixNameCollision(name)
         param_obj.is_array = len(param_obj.num_elements)
         determine_py_type(param_obj)
-<<<<<<< HEAD
-        
+
         # debug('type: %s' % param_obj.type)
         # debug('is_const: %s' % param_obj.is_const)
         # debug('name: %s' % param_obj.name)
         # debug('is_pointer: %s' % param_obj.is_pointer)
         # debug('is_array: %s' % str(param_obj.is_array))
         # debug('py_string: %s' % param_obj.py_string)
-        
-=======
 
-        #debug('type: %s' % param_obj.type)
-        #debug('is_const: %s' % param_obj.is_const)
-        #debug('name: %s' % param_obj.name)
-        #debug('is_pointer: %s' % param_obj.is_pointer)
-        #debug('is_array: %s' % str(param_obj.is_array))
-        #debug('py_string: %s' % param_obj.py_string)
-
->>>>>>> master
         if param_obj.is_array:
             param_obj.py_string = get_tuple_py_string(param_obj)
 
@@ -893,11 +846,9 @@ def parse_prototype(prototype):
     function, the function name, whether it is a pointer and the
     parameters it takes.
     """
-<<<<<<< HEAD
-    print(prototype)
-=======
 
->>>>>>> master
+    print(prototype)
+
     prototype = prototype.strip()
     prototype_split = prototype.split(" ")
     type = prototype_split[0]
